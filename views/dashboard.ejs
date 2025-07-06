@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - SHUKRANI Panel Admin</title>
+</head>
+<body>
+  <h1>SHUKRANI Admin Panel</h1>
+  <% settings.forEach(setting => { %>
+    <form action="/admin/toggle/<%= setting.key %>" method="POST">
+      <label><%= setting.key %>:</label>
+      <select name="value" onchange="this.form.submit()">
+        <option value="yes" <%= setting.value === 'yes' ? 'selected' : '' %>>Yes</option>
+        <option value="no" <%= setting.value === 'no' ? 'selected' : '' %>>No</option>
+      </select>
+    </form>
+    <br>
+  <% }) %>
+</body>
+</html>

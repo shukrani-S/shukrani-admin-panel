@@ -26,7 +26,22 @@ async function getSetting(key) {
   }
 }
 
+async function getAllSettings() {
+  try {
+    const res = await db.query('SELECT * FROM settings');
+    const settings = {};
+    res.rows.forEach(row => {
+      settings[row.key] = row.value;
+    });
+    return settings;
+  } catch (err) {
+    console.error('❌ Error fetching all settings:', err);
+    return {};
+  }
+}
+
 module.exports = {
   updateSetting,
-  getSetting
+  getSetting,
+  getAllSettings
 };

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌐 SHUKRANI Bot Pairing</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f8f8f8;
+      text-align: center;
+      padding: 2em;
+    }
+    .card {
+      background: white;
+      padding: 2em;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    img {
+      width: 100%;
+    }
+    button {
+      background: #0099ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    code {
+      background: #eee;
+      padding: 5px 10px;
+      display: inline-block;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🤖 Pair Your SHUKRANI Bot</h2>
+    <img src="<%= qrImage %>" alt="QR Code">
+    <p>Pair Code:</p>
+    <code id="pairCode"><%= pairCode %></code><br>
+    <button onclick="copyCode()">Copy Code</button>
+  </div>
+
+  <script>
+    function copyCode() {
+      const code = document.getElementById("pairCode").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("✅ Code copied: " + code);
+      }).catch(err => {
+        alert("❌ Failed to copy code: " + err);
+      });
+    }
+  </script>
+</body>
+</html>

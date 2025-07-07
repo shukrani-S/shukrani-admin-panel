@@ -2,16 +2,15 @@ const express = require('express');
 const qrcode = require('qrcode');
 const app = express();
 
-const PAIR_CODE = 'SHUKRANI-PAIR-CODE'; // Replace with dynamic code if needed
-
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 
 app.get('/', async (req, res) => {
-  const qrData = `https://wa.me/qr/${PAIR_CODE}`;
+  const userCode = req.query.code || 'DEFAULT-CODE';
+  const qrData = `https://wa.me/qr/${userCode}`;
   const qrImage = await qrcode.toDataURL(qrData);
-  res.render('index', { qrImage, pairCode: PAIR_CODE });
+  res.render('index', { qrImage, pairCode: userCode });
 });
 
 const PORT = process.env.PORT || 3000;

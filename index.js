@@ -7,7 +7,9 @@ app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 
 app.get('/', async (req, res) => {
-  const userCode = req.query.code || 'DEFAULT-CODE';
+  const userCode = req.query.code;
+  if (!userCode) return res.render('index', { qrImage: null, pairCode: null });
+
   const qrData = `https://wa.me/qr/${userCode}`;
   const qrImage = await qrcode.toDataURL(qrData);
   res.render('index', { qrImage, pairCode: userCode });

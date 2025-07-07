@@ -2,10 +2,11 @@ const express = require('express');
 const qrcode = require('qrcode');
 const app = express();
 
-const PAIR_CODE = 'SHUKRANI-PAIR-CODE'; // Badilisha hapa ikiwa dynamic
+const PAIR_CODE = 'SHUKRANI-PAIR-CODE'; // badilisha kwa code halisi
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.set('views', __dirname + '/views');
 
 app.get('/', async (req, res) => {
   const qrData = `https://wa.me/qr/${PAIR_CODE}`;

@@ -1,21 +1,24 @@
 const express = require('express');
-const qrcode = require('qrcode');
+const path = require('path');
+
 const app = express();
+const port = process.env.PORT || 3000;
 
+// Set EJS as the templating engine
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.set('views', __dirname + '/views');
 
-app.get('/', async (req, res) => {
-  const userCode = req.query.code;
-  if (!userCode) return res.render('index', { qrImage: null, pairCode: null });
+// Set views directory
+app.set('views', path.join(__dirname, 'views'));
 
-  const qrData = `https://wa.me/qr/${userCode}`;
-  const qrImage = await qrcode.toDataURL(qrData);
-  res.render('index', { qrImage, pairCode: userCode });
+// Serve static files (images, css, etc) from "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Route for homepage
+app.get('/', (req, res) => {
+  res.render('index'); // this will load views/index.ejs
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`✅ SHUKRANI Pair site running on port ${PORT}`);
+// Start server
+app.listen(port, () => {
+  console.log(`✅ SHUKRANI-MD PANEL is running at http://localhost:${port}`);
 });

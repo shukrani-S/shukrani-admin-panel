@@ -1,24 +1,32 @@
 const express = require('express');
 const path = require('path');
+const qrcode = require('qrcode');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Set EJS as the templating engine
 app.set('view engine', 'ejs');
-
-// Set views directory
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static('public'));
 
-// Serve static files (images, css, etc) from "public" folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Route for homepage
+// Route: homepage panel
 app.get('/', (req, res) => {
-  res.render('index'); // this will load views/index.ejs
+  res.render('index');
 });
 
-// Start server
+// Route: QR Code
+app.get('/qr', async (req, res) => {
+  const qrData = "wa://connect-your-whatsapp-session";
+  const qrImage = await qrcode.toDataURL(qrData);
+  res.render('qr', { qrImage });
+});
+
+// Route: Pair Code
+app.get('/pair', (req, res) => {
+  const pairCode = '123-456'; // Replace with real logic
+  res.render('pair', { pairCode });
+});
+
 app.listen(port, () => {
-  console.log(`✅ SHUKRANI-MD PANEL is running at http://localhost:${port}`);
+  console.log(`✅ Server running at http://localhost:${port}`);
 });
